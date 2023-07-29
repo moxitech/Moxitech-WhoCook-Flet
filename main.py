@@ -3,22 +3,20 @@ from flet import dropdown as dropdownElement
 from random import randint
 DEFAULT_FLET_PORT = 8014
 data = {
-    "Первое" :      ["1", "2", "3"],
-    "Второе" :      [],
-    "Гарниры" :     [],
-    "Закуски" :     [],
-    "Салаты" :      [],
-    "Еще что-то" :  [],
-    "Десерты" :     [],
+    "Первое" :      ["Суп", "2", "3"],
+    "Второе" :      ["Макароны"],
+    "Гарниры" :     ["Салат"],
+    "Закуски" :     ["Сухарики"],
+    "Салаты" :      ["Салад"],
+    "Десерты" :     ["Чизкейк"],
 }
+
 def main(page: Page):
-    
     def _bootstrap():
         _elements = []
         for creator in data.keys():
             _elements.append(dropdownElement.Option(creator))
         return _elements
-
     list_of_last = Column(
         controls=[Text(size=20), Text(size=20), Text(size=20)],
     )
@@ -26,7 +24,6 @@ def main(page: Page):
         options=_bootstrap(),
         width=400
     )
-
     def get(e):
         if dropdown_get_type_of_food.value in ["", None]:
             SnackBar(content=Text("Выберите пункт из выпадающего списка")).open = True
@@ -40,14 +37,11 @@ def main(page: Page):
         else:
             list_of_last.controls.append(Text(food, size=20))
         page.update()
-    
     page.title = "Что готовить?"
     page.vertical_alignment = "center"
     page.horizontal_alignment = "center"  
     text            = Text("Что готовить?", style = TextThemeStyle.DISPLAY_MEDIUM) 
     who_cook_button = FilledButton(text="Предложи", on_click=get, height=60)
-    
-
     page.add(
         Column(
             controls=[
@@ -59,5 +53,4 @@ def main(page: Page):
             spacing=50    
         )
     )
-
 app(target=main, port=DEFAULT_FLET_PORT)
